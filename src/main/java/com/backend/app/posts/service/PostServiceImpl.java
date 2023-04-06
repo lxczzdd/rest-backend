@@ -4,8 +4,11 @@ import com.backend.app.config.JwtTokenUtil;
 import com.backend.app.posts.entity.Post;
 import com.backend.app.posts.exception.PostNotFoundException;
 import com.backend.app.posts.repository.PostRepository;
+import com.backend.app.users.entity.User;
 import com.backend.app.users.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +19,6 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final UserService userService;
-    private final JwtTokenUtil jwtTokenUtil;
 
     @Override
     public List<Post> getAllPosts() {
@@ -30,7 +32,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post createPost(Post post) {
-        final String requestTokenHeader = ("Authorization");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.getUserByUsername(username);
+        post.setUser(user);
         return postRepository.save(post);
     }
 
