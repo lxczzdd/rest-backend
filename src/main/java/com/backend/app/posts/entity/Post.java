@@ -14,25 +14,22 @@ import lombok.NoArgsConstructor;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @NotBlank(message = "Name is mandatory")
     private String title;
 
     @Column
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private User user;
 
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
     }
-
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
-    @JsonIgnore
-    private User user;
-
 }
