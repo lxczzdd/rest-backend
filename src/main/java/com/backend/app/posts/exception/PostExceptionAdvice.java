@@ -1,16 +1,20 @@
 package com.backend.app.posts.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class PostNotFoundAdvice {
+public class PostExceptionAdvice {
 
     @ExceptionHandler(PostNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String postNotFoundHandler(PostNotFoundException ex) {
-        return ex.getMessage();
+    ResponseEntity<String> postNotFoundHandler(PostNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(PostPermissionsException.class)
+    ResponseEntity<String> postBadPermissionsHandler(PostPermissionsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

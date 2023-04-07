@@ -8,22 +8,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 public class FileUploadUtil {
-
-    public static void saveFile(String uploadDir, String fileName,
-                                MultipartFile multipartFile) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
+    public static String saveFile(String fileName, MultipartFile multipartFile)
+            throws IOException {
+        Path uploadPath = Paths.get("src/main/resources/static");
 
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
+        String fileCode = String.valueOf(UUID.randomUUID());
+
         try (InputStream inputStream = multipartFile.getInputStream()) {
-            Path filePath = uploadPath.resolve(fileName);
+            Path filePath = uploadPath.resolve(fileCode + "-" + fileName);
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioe) {
-            throw new IOException("Could not save image file: " + fileName, ioe);
+            throw new IOException("Could not save file: " + fileName, ioe);
         }
+
+        return fileCode;
     }
 }

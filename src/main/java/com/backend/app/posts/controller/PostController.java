@@ -1,8 +1,8 @@
 package com.backend.app.posts.controller;
 
 import com.backend.app.posts.entity.Post;
+import com.backend.app.posts.entity.dto.PostCreateDTO;
 import com.backend.app.posts.service.PostService;
-import com.backend.app.users.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final UserService userService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -31,8 +30,8 @@ public class PostController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Post createPost(@RequestBody Post post) {
-        return postService.createPost(post);
+    public Post createPost(@ModelAttribute PostCreateDTO postDTO) {
+        return postService.createPost(postDTO);
     }
 
     @DeleteMapping("/{id}")

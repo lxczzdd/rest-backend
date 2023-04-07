@@ -24,12 +24,16 @@ public class Post {
     @Column
     private String content;
 
+    @Column
+    private String file;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private User user;
 
-    public Post(String title, String content) {
+    public Post(String title, String content, String file) {
         this.title = title;
         this.content = content;
+        this.file = file;
     }
 }
