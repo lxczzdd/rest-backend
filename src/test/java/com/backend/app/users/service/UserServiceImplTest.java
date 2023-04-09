@@ -1,5 +1,6 @@
 package com.backend.app.users.service;
 
+import com.backend.app.users.dto.UserCreateAndReplaceDTO;
 import com.backend.app.users.entity.User;
 import com.backend.app.users.exception.UserNotFoundException;
 import com.backend.app.users.repository.UserRepository;
@@ -59,9 +60,9 @@ class UserServiceImplTest {
 
     @Test
     void createUser_shouldCallRepository() {
+        final UserCreateAndReplaceDTO dto = Mockito.mock(UserCreateAndReplaceDTO.class);
         final User user = Mockito.mock(User.class);
-
-        service.createUser(user);
+        service.createUser(dto);
 
         Mockito.verify(repository).save(user);
     }
@@ -78,12 +79,12 @@ class UserServiceImplTest {
 
     @Test
     void replaceUser_shouldCallRepository() {
-        final User updatedUser = new User("newName", "newemail@example.com", "252525");
+        final UserCreateAndReplaceDTO updatedUser = new UserCreateAndReplaceDTO("newName", "newemail@example.com", "252525");
         final User user = Mockito.mock(User.class);
         Mockito.when(repository.findById(ID)).thenReturn(Optional.of(user));
-        Mockito.when(repository.save(user)).thenReturn(updatedUser);
+        Mockito.when(repository.save(user)).thenReturn(new User(updatedUser.getUsername(), updatedUser.getEmail(), updatedUser.getPassword()));
 
-        final User actual = service.replaceUser(user, ID);
+        final User actual = service.replaceUser(updatedUser, ID);
 
         Assertions.assertNotNull(actual);
         Assertions.assertNotEquals(user, actual);

@@ -49,7 +49,7 @@ class AuthServiceImplTest {
     }
 
     @Test
-    void login_shouldCallAuthManager() {
+    void login_shouldCallAuthManager_authenticate() {
         final JwtRequest request = Mockito.mock(JwtRequest.class);
         final Authentication expectedAuth = Mockito.mock(Authentication.class);
         final UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
@@ -63,7 +63,7 @@ class AuthServiceImplTest {
     }
 
     @Test
-    void login_shouldCallUserDetails() {
+    void login_shouldCallUserDetails_loadUserByUsername() {
         final JwtRequest request = Mockito.mock(JwtRequest.class);
         final UserDetails expectedUserDetails = Mockito.mock(UserDetails.class);
         Mockito.when(userDetailsService.loadUserByUsername(request.getUsername())).thenReturn(expectedUserDetails);
@@ -76,7 +76,7 @@ class AuthServiceImplTest {
     }
 
     @Test
-    void login_shouldCallJwtTokenUtil() {
+    void login_shouldCallJwtTokenUtil_generateToken() {
         final UserDetails userDetails = Mockito.mock(UserDetails.class);
         final String expectedToken = "token";
         Mockito.when(jwtTokenUtil.generateToken(userDetails)).thenReturn(expectedToken);

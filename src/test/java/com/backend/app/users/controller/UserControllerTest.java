@@ -1,5 +1,6 @@
 package com.backend.app.users.controller;
 
+import com.backend.app.users.dto.UserCreateAndReplaceDTO;
 import com.backend.app.users.entity.User;
 import com.backend.app.users.exception.UserNotFoundException;
 import com.backend.app.users.service.UserService;
@@ -59,7 +60,7 @@ class UserControllerTest {
 
     @Test
     void createUser_shouldCallService() {
-        final User user = Mockito.mock(User.class);
+        final UserCreateAndReplaceDTO user = Mockito.mock(UserCreateAndReplaceDTO.class);
 
         controller.createUser(user);
 
@@ -75,7 +76,7 @@ class UserControllerTest {
 
     @Test
     void replaceUser_shouldCallService() {
-        final User user = Mockito.mock(User.class);
+        final UserCreateAndReplaceDTO user = Mockito.mock(UserCreateAndReplaceDTO.class);
 
         controller.replaceUser(user, ID);
 
