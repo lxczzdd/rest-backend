@@ -1,5 +1,6 @@
 package com.backend.app.users.service;
 
+import com.backend.app.users.dto.UserCreateAndReplaceDTO;
 import com.backend.app.users.entity.User;
 
 import java.util.List;
@@ -11,9 +12,10 @@ public interface UserService {
 
     public User getUserByUsername(String username);
 
-    public User createUser(User user);
+    User replaceUser(UserCreateAndReplaceDTO dto, Long id);
 
     public void deleteUserById(Long id);
 
-    public User replaceUser(User user, Long id);
+    User createUser(UserCreateAndReplaceDTO dto);
+
 }

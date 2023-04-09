@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public void deletePostById(Long id) {
         String username = getUsernameFromAuth();
-        Post post = postRepository.getReferenceById(id);
+        Post post = getPostById(id);
         if(post.getUser().getUsername().equals(username))
             postRepository.deleteById(id);
         else

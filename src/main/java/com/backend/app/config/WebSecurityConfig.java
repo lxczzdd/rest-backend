@@ -34,11 +34,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger**/**", "/file/**").permitAll()
                 .requestMatchers("/posts/**").authenticated()
-                .requestMatchers("/file/**").permitAll()
-                .requestMatchers("/v3/api-docs/**", "/swagger**/**").permitAll()
-                .requestMatchers("/users/**").permitAll()
                 .and()
                 .exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -4,6 +4,7 @@ import com.backend.app.auth.api.JwtRequest;
 import com.backend.app.auth.exception.AuthAlreadyExistException;
 import com.backend.app.config.JwtTokenUtil;
 import com.backend.app.config.JwtUserDetailsService;
+import com.backend.app.users.dto.UserCreateAndReplaceDTO;
 import com.backend.app.users.entity.User;
 import com.backend.app.users.exception.UserNotFoundException;
 import com.backend.app.users.repository.UserRepository;
@@ -26,8 +27,8 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public User register(User user) {
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+    public User register(UserCreateAndReplaceDTO dto) {
+        User user = new User(dto.getUsername(), dto.getEmail(), new BCryptPasswordEncoder().encode(dto.getPassword()));
         if(userRepo.findByUsername(user.getUsername()).isPresent())
             throw new AuthAlreadyExistException("User with this credentials already exist");
 

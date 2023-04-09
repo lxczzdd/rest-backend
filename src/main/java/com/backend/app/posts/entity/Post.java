@@ -2,8 +2,8 @@ package com.backend.app.posts.entity;
 
 import com.backend.app.users.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,16 +15,19 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(example = "23")
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Name is mandatory")
+    @Schema(example = "My First Post")
     private String title;
 
     @Column
+    @Schema(example = "Some content")
     private String content;
 
     @Column
+    @Schema(example = "coolimage.png")
     private String file;
 
     @ManyToOne(fetch = FetchType.LAZY)

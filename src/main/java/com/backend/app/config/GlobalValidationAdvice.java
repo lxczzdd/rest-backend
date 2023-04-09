@@ -1,4 +1,4 @@
-package com.backend.app.users.exception;
+package com.backend.app.config;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

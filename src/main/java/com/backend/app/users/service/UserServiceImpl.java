@@ -1,5 +1,6 @@
 package com.backend.app.users.service;
 
+import com.backend.app.users.dto.UserCreateAndReplaceDTO;
 import com.backend.app.users.entity.User;
 import com.backend.app.users.exception.UserNotFoundException;
 import com.backend.app.users.repository.UserRepository;
@@ -30,22 +31,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
+    public User createUser(UserCreateAndReplaceDTO dto) {
+        User user = new User(dto.getUsername(), dto.getEmail(), dto.getPassword());
         return userRepository.save(user);
     }
 
     @Override
-    public User replaceUser(User user, Long id) {
+    public User replaceUser(UserCreateAndReplaceDTO dto, Long id) {
         return userRepository.findById(id)
                 .map(toUpdateUser -> {
-                    toUpdateUser.setUsername(user.getUsername());
-                    toUpdateUser.setEmail(user.getEmail());
+                    toUpdateUser.setUsername(dto.getUsername());
+                    toUpdateUser.setEmail(dto.getEmail());
+                    toUpdateUser.setPassword(dto.getPassword());
                     return userRepository.save(toUpdateUser);
-                })
-                .orElseGet(() -> {
-                    user.setId(id);
-                    return userRepository.save(user);
-                });
+                }).get();
     }
 
     @Override

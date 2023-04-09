@@ -1,9 +1,10 @@
 package com.backend.app.users.entity;
 
 import com.backend.app.posts.entity.Post;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,29 +16,31 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Table(name = "users")
+@Tag(name = "User entity")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(example = "1")
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Name is mandatory")
+    @Schema(example = "Bestuser134")
     private String username;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "Email is mandatory")
-    @Email(message = "Invalid email form")
+    @Schema(example = "Bestuser134")
     private String email;
 
     @Column(nullable = false)
-    @NotBlank(message = "Password is mandatory")
+    @Schema(example = "Bestuser134")
     private String password;
 
     @CreationTimestamp
     private Instant createdAt;
 
     @OneToMany(mappedBy="user")
+    @Hidden
     private List<Post> posts;
 
 
