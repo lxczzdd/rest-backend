@@ -37,6 +37,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/posts/**").authenticated()
                 .requestMatchers("/file/**").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger**/**").permitAll()
+                .requestMatchers("/users/**").permitAll()
                 .and()
                 .exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
