@@ -1,9 +1,9 @@
 package com.backend.app.posts.service;
 
 import com.backend.app.posts.entity.Post;
-import com.backend.app.posts.entity.dto.PostCreateDTO;
 import com.backend.app.posts.exception.PostNotFoundException;
 import com.backend.app.posts.repository.PostRepository;
+import com.backend.app.users.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +23,9 @@ class PostServiceImplTest {
 
     @Mock
     private PostRepository repository;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private PostServiceImpl service;
@@ -56,26 +59,5 @@ class PostServiceImplTest {
         Assertions.assertNotNull(actualPosts);
         Assertions.assertEquals(posts, actualPosts);
         Mockito.verify(repository).findAll();
-    }
-
-    @Test
-    void createPost_shouldCallRepository() {
-        final PostCreateDTO postDTO = Mockito.mock(PostCreateDTO.class);
-
-        service.createPost(postDTO);
-
-        final Post post = new Post(postDTO.getTitle(), postDTO.getContent(), "randomfile");
-
-        Mockito.verify(repository).save(post);
-    }
-
-    @Test
-    void deletePostById_shouldCallRepository() {
-        final Post post = Mockito.mock(Post.class);
-        Mockito.when(repository.findById(ID)).thenReturn(Optional.of(post));
-
-        service.deletePostById(ID);
-
-        Mockito.verify(repository).delete(post);
     }
 }

@@ -61,7 +61,7 @@ class UserServiceImplTest {
     @Test
     void createUser_shouldCallRepository() {
         final UserCreateAndReplaceDTO dto = Mockito.mock(UserCreateAndReplaceDTO.class);
-        final User user = Mockito.mock(User.class);
+        final User user = new User(dto.getUsername(), dto.getEmail(), dto.getPassword());
         service.createUser(dto);
 
         Mockito.verify(repository).save(user);
@@ -69,12 +69,9 @@ class UserServiceImplTest {
 
     @Test
     void deleteUserById_shouldCallRepository() {
-        final User user = Mockito.mock(User.class);
-        Mockito.when(repository.findById(ID)).thenReturn(Optional.of(user));
-
         service.deleteUserById(ID);
 
-        Mockito.verify(repository).delete(user);
+        Mockito.verify(repository).deleteById(ID);
     }
 
     @Test
