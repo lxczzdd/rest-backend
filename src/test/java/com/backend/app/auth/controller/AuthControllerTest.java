@@ -3,7 +3,7 @@ package com.backend.app.auth.controller;
 import com.backend.app.auth.api.JwtRequest;
 import com.backend.app.auth.api.JwtResponse;
 import com.backend.app.auth.service.AuthService;
-import com.backend.app.users.entity.User;
+import com.backend.app.users.dto.UserCreateAndReplaceDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ class AuthControllerTest {
 
     @Test
     void register_shouldCallService() {
-        final User user = Mockito.mock(User.class);
+        final UserCreateAndReplaceDTO user = Mockito.mock(UserCreateAndReplaceDTO.class);
 
         controller.register(user);
 
@@ -34,7 +34,7 @@ class AuthControllerTest {
 
     @Test
     void register_shouldReturnResponseEntity() {
-        final User user = Mockito.mock(User.class);
+        final UserCreateAndReplaceDTO user = Mockito.mock(UserCreateAndReplaceDTO.class);
 
         ResponseEntity<?> actual = controller.register(user);
         ResponseEntity<?> expected = new ResponseEntity<>("User registered successfully!", HttpStatus.OK);
